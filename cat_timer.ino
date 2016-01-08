@@ -1,5 +1,10 @@
 /*
   Modified from http://www.arduino.cc/en/Tutorial/Button. Requires http://playground.arduino.cc/Code/SimpleTimer.
+
+  The circuit:
+  * LED attached from pin 13 to ground
+  * pushbutton attached from pin 2 to +5V
+  * 10K resistor attached from pin 2 to ground
  */
 
 #include <SimpleTimer.h>
@@ -7,8 +12,8 @@
 // the timer object
 SimpleTimer timer;
 
-const int buttonPin = 2;     // the number of the pushbutton pin
-const int ledPin =  8;      // the number of the LED pin
+const int buttonPin = 2;
+const int ledPin = 13;
 
 int buttonState = 0;
 
