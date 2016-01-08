@@ -14,15 +14,40 @@ SimpleTimer timer;
 
 const int buttonPin = 2;
 const int ledPin = 13;
-const int feedingInterval = 1000 * 3; // in milliseconds
+const long feedingInterval = 1000 * 5; // in milliseconds
+const long buttonDebounce = 1000 * 2; // in milliseconds
 
 int buttonState = LOW;
 boolean buttonEnabled = true;
+int feedingTimer = -1;
 
-void feedMe() {
+void markFed() {
+  // turn LED off
+  digitalWrite(ledPin, LOW);
+}
+
+void enableButton() {
+  buttonEnabled = true;
+}
+
+void debounceButton() {
+  buttonEnabled = false;
+  timer.setTimeout(buttonDebounce, enableButton);
+}
+
+void needsFood() {
   // turn LED on
   digitalWrite(ledPin, HIGH);
-  buttonEnabled = true;
+  feedingTimer = -1;
+}
+
+void resetFeedingInterval() {
+  if (feedingTimer >= 0) {
+    // already a timer running - they were fed early
+    timer.restartTimer(feedingTimer);
+  } else {
+    feedingTimer = timer.setTimeout(feedingInterval, needsFood);
+  }
 }
 
 void setup() {
@@ -38,14 +63,10 @@ void setup() {
 void loop() {
   if (buttonEnabled) {
     buttonState = digitalRead(buttonPin);
-  
     if (buttonState == HIGH) {
-      // ignore it if pressed again in the same feeding cycle
-      buttonEnabled = false;
-
-      // turn LED off
-      digitalWrite(ledPin, LOW);
-      timer.setTimeout(feedingInterval, feedMe);
+      markFed();
+      resetFeedingInterval();
+      debounceButton();
     }
   }
 
