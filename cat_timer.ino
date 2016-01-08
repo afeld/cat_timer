@@ -14,12 +14,15 @@ SimpleTimer timer;
 
 const int buttonPin = 2;
 const int ledPin = 13;
+const int feedingInterval = 1000 * 3; // in milliseconds
 
-int buttonState = 0;
+int buttonState = LOW;
+boolean buttonEnabled = true;
 
 void feedMe() {
-    // turn LED on
-    digitalWrite(ledPin, HIGH);
+  // turn LED on
+  digitalWrite(ledPin, HIGH);
+  buttonEnabled = true;
 }
 
 void setup() {
@@ -33,13 +36,17 @@ void setup() {
 }
 
 void loop() {
-  // read the state of the pushbutton value:
-  buttonState = digitalRead(buttonPin);
+  if (buttonEnabled) {
+    buttonState = digitalRead(buttonPin);
+  
+    if (buttonState == HIGH) {
+      // ignore it if pressed again in the same feeding cycle
+      buttonEnabled = false;
 
-  if (buttonState == HIGH) {
-    // turn LED off
-    digitalWrite(ledPin, LOW);
-    timer.setTimeout(1000, feedMe);
+      // turn LED off
+      digitalWrite(ledPin, LOW);
+      timer.setTimeout(feedingInterval, feedMe);
+    }
   }
 
   timer.run();
