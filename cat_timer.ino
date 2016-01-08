@@ -14,8 +14,8 @@ SimpleTimer timer;
 
 const int buttonPin = 2;
 const int ledPin = 13;
-const long feedingInterval = 1000 * 5; // in milliseconds
-const long buttonDebounce = 1000 * 2; // in milliseconds
+const long feedingInterval = ((long) 1000) * 60 * 60 * 10; // in milliseconds
+const long buttonDebounce = ((long) 1000) * 5; // in milliseconds
 
 int buttonState = LOW;
 boolean buttonEnabled = true;
@@ -36,6 +36,7 @@ void debounceButton() {
 }
 
 void needsFood() {
+  enableButton();
   // turn LED on
   digitalWrite(ledPin, HIGH);
   feedingTimer = -1;
