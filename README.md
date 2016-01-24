@@ -11,5 +11,9 @@ Requires [`SimpleTimer`](http://playground.arduino.cc/Code/SimpleTimer). The cir
 * LED attached from pin D2 to ground
 * pushbutton attached from pin D12 to +5V
 * 10K resistor attached from pin D12 to ground
+* Two 10k resistors in series
+    * One end goes to Battery - and also to Arduino GND
+    * The other goes to Battery + and also to Arduino Vin
+    * The middle (connection between two resistors) goes to Arduino A7
 
 ![schematic](schematic.png)
