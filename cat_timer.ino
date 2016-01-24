@@ -1,11 +1,4 @@
-/*
-  Modified from http://www.arduino.cc/en/Tutorial/Button. Requires http://playground.arduino.cc/Code/SimpleTimer.
-
-  The circuit:
-  * LED attached from pin 13 to ground
-  * pushbutton attached from pin 2 to +5V
-  * 10K resistor attached from pin 2 to ground
- */
+// https://github.com/afeld/cat_timer
 
 #include <SimpleTimer.h>
 
