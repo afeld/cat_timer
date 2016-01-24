@@ -82,6 +82,10 @@ void debounceButton() {
   timer.setTimeout(buttonDebounce, enableButton);
 }
 
+boolean isFeedingTimerRunning() {
+  return feedingTimer >= 0;
+}
+
 void needsFood() {
   enableButton();
   turnOnLed();
@@ -89,7 +93,7 @@ void needsFood() {
 }
 
 void resetFeedingInterval() {
-  if (feedingTimer >= 0) {
+  if (isFeedingTimerRunning()) {
     // already a timer running - they were fed early
     timer.restartTimer(feedingTimer);
   } else {
@@ -121,7 +125,10 @@ void loop() {
   if (buttonEnabled) {
     checkButtonPush();
   }
-  checkVoltage();
+  // only worry about voltage when the timer is running and thus the LED is off anyway
+  if (isFeedingTimerRunning()) {
+    checkVoltage();
+  }
 
   timer.run();
 }
