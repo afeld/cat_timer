@@ -4,9 +4,13 @@ This project was built with a knockoff [Arduino Nano](http://www.amazon.com/gp/p
 
 Modified from [the Arduino Button tutorial](http://www.arduino.cc/en/Tutorial/Button).
 
-## Setup
+## Code
 
-Requires [`SimpleTimer`](http://playground.arduino.cc/Code/SimpleTimer). The circuit:
+See [`cat_timer.ino`](cat_timer.ino). Requires [`SimpleTimer`](http://playground.arduino.cc/Code/SimpleTimer) library.
+
+## Board
+
+The circuit:
 
 * LED attached from pin D2 to ground
 * pushbutton attached from pin D12 to +5V
@@ -18,3 +22,9 @@ Requires [`SimpleTimer`](http://playground.arduino.cc/Code/SimpleTimer). The cir
 * 9V battery connected to Vin and GND
 
 ![schematic](schematic.png)
+
+## Assembly
+
+### Cutting holes in box
+
+I used a run-of-the-mill paper hole punch that you would buy in an office supply store, which works fine for cutting the thin tin. Only trick is making sure it has a decent amount of space in between the two arms(?), so that you can maneuver around the lip of the Altoids box.
