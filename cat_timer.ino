@@ -5,9 +5,9 @@
 SimpleTimer timer;
 
 // configuration
-const int buttonPin = 12;
-const int ledPin = 2;
-const int sensorPin = A0;
+const int buttonPin = 2;
+const int ledPin = 13;
+const int sensorPin = A7;
 const float voltageThreshold = 6.00;
 const int blinkInterval = 1000 * 4; // amount of time between blinks, in ms
 const long feedingInterval = ((long) 1000) * 60 * 60 * 10; // in milliseconds
