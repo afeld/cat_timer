@@ -5,8 +5,8 @@
 // the timer object
 SimpleTimer timer;
 
-const int buttonPin = 2;
-const int ledPin = 13;
+const int buttonPin = 12;
+const int ledPin = 2;
 const long feedingInterval = ((long) 1000) * 60 * 60 * 10; // in milliseconds
 const long buttonDebounce = ((long) 1000) * 5; // in milliseconds
 

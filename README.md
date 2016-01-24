@@ -8,6 +8,8 @@ Modified from [the Arduino Button tutorial](http://www.arduino.cc/en/Tutorial/Bu
 
 Requires [`SimpleTimer`](http://playground.arduino.cc/Code/SimpleTimer). The circuit:
 
-* LED attached from pin 13 to ground
-* pushbutton attached from pin 2 to +5V
-* 10K resistor attached from pin 2 to ground
+* LED attached from pin D2 to ground
+* pushbutton attached from pin D12 to +5V
+* 10K resistor attached from pin D12 to ground
+
+![schematic](schematic.png)
