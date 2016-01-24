@@ -2,21 +2,75 @@
 
 #include <SimpleTimer.h>
 
-// the timer object
 SimpleTimer timer;
 
+// configuration
 const int buttonPin = 12;
 const int ledPin = 2;
+const int sensorPin = A0;
+const float voltageThreshold = 6.00;
+const int blinkInterval = 1000 * 4; // amount of time between blinks, in ms
 const long feedingInterval = ((long) 1000) * 60 * 60 * 10; // in milliseconds
-const long buttonDebounce = ((long) 1000) * 5; // in milliseconds
 
+// internal
+const long buttonDebounce = ((long) 1000) * 5; // in milliseconds
 int buttonState = LOW;
 boolean buttonEnabled = true;
 int feedingTimer = -1;
+int intervalId = -1;
+
+// ------ general helpers --------
+
+void turnOffLed() {
+  digitalWrite(ledPin, LOW);
+}
+
+void turnOnLed() {
+  digitalWrite(ledPin, HIGH);
+}
+
+// ----- voltage-related methods --------
+
+float getVoltage() {
+  int sensorValue = analogRead(sensorPin); // read the A0 pin value
+  return sensorValue * (5.00 / 1023.00) * 2; // convert the value to a true voltage
+}
+
+
+void blinkOnce() {
+  turnOnLed();
+  timer.setTimeout(50, turnOffLed);
+}
+
+void startBlinking() {
+  intervalId = timer.setInterval(blinkInterval, blinkOnce);
+}
+
+void stopBlinking() {
+  timer.deleteTimer(intervalId);
+  intervalId = -1;
+  turnOffLed();
+}
+
+void checkVoltage() {
+  float voltage = getVoltage();
+  if (voltage < voltageThreshold) {
+    // check if already blinking
+    if (intervalId < 0) {
+      startBlinking();
+    }
+  } else {
+    // check if already blinking
+    if (intervalId >= 0) {
+      stopBlinking();
+    }
+  }
+}
+
+// ------ feeding-related methods ---------
 
 void markFed() {
-  // turn LED off
-  digitalWrite(ledPin, LOW);
+  turnOffLed();
 }
 
 void enableButton() {
@@ -30,8 +84,7 @@ void debounceButton() {
 
 void needsFood() {
   enableButton();
-  // turn LED on
-  digitalWrite(ledPin, HIGH);
+  turnOnLed();
   feedingTimer = -1;
 }
 
@@ -53,20 +106,22 @@ void checkButtonPush() {
   }
 }
 
+// -----------------------------
+
 void setup() {
   // initialize the LED pin as an output
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input
   pinMode(buttonPin, INPUT);
 
-  // turn LED on
-  digitalWrite(ledPin, HIGH);
+  turnOnLed();
 }
 
 void loop() {
   if (buttonEnabled) {
     checkButtonPush();
   }
+  checkVoltage();
 
   timer.run();
 }
