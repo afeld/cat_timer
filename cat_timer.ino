@@ -51,6 +51,15 @@ void resetFeedingInterval() {
   }
 }
 
+void checkButtonPush() {
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == HIGH) {
+    markFed();
+    resetFeedingInterval();
+    debounceButton();
+  }
+}
+
 void setup() {
   // initialize the LED pin as an output
   pinMode(ledPin, OUTPUT);
@@ -63,12 +72,7 @@ void setup() {
 
 void loop() {
   if (buttonEnabled) {
-    buttonState = digitalRead(buttonPin);
-    if (buttonState == HIGH) {
-      markFed();
-      resetFeedingInterval();
-      debounceButton();
-    }
+    checkButtonPush();
   }
 
   timer.run();
