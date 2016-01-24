@@ -15,5 +15,6 @@ Requires [`SimpleTimer`](http://playground.arduino.cc/Code/SimpleTimer). The cir
     * One end goes to Battery - and also to Arduino GND
     * The other goes to Battery + and also to Arduino Vin
     * The middle (connection between two resistors) goes to Arduino A7
+* 9V battery connected to Vin and GND
 
 ![schematic](schematic.png)
